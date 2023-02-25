@@ -7,8 +7,8 @@
 
 int gcd(int, int);
 int mirror_number(int);
-int r_mirror_number(int);
 int pow(int, int);
+int count_dig(int);
 
 int main() {
 	setlocale(LC_ALL, "Russian");
@@ -34,34 +34,37 @@ int main() {
 	std::cout << "Exercise 2.\nProgram for return number in a reflected form.\n";
 	std::cin >> num;
 	std::cout << mirror_number(num);
+	
 	return 0;
 }
 
+// function for counting the number of digits of a number
+int count_dig(int n) {
+	int count_dig = 0;
+	while (n) {
+		n /= 10;
+		count_dig++;
+	}
+	return count_dig;
+}
+
+// function for exponentiating a number
 int pow(int n, int p) {
 	int num = n;
-	for (int i = 0; i < p; ++i) {
+	for (int i = 1; i < p; ++i) {
 		n *= num;
 	}
 	return n;
 }
 
-int r_mirror_number(int n) {
-	if (n == 0)
-		return;
-	return r_mirror_number(n/10)
-}
-
+// function for the mirror reversal of a number
 int mirror_number(int n) {
-	int digit_counter = 0;
-	int number = n;
+	int number = 0;
 	int num;
-	while (number) {
-		number /= 10;
-		digit_counter++;
-	}
+	int digit_counter = count_dig(n); // counting the number of digits
 	digit_counter--;
-	while (n > 10) {
-		num = (n % 10) * pow(10, digit_counter - 1);
+	while (n >= 10) {
+		num = (n % 10) * pow(10, digit_counter);
 		number += num;
 		n /= 10;
 		digit_counter--;
@@ -70,6 +73,7 @@ int mirror_number(int n) {
 	return number;
 }
 
+// function for calculating the greatest common divisor
 int gcd(int a=0, int b=0) {
 	if (a < b) {
 		int tmp = a;
